@@ -82,7 +82,6 @@ Themes persist automatically using localStorage.
 
     ├── index.html
     ├── style.css
-    ├── cards.css
     ├── script.js
     └── README.md
 

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Biodata </title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Rozha One for Headings (Look), Noto Sans for Body -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="mode-edit">
+
+    <header class="header">
+        <div class="brand">
+            <i class="fa-solid fa-crown"></i> Biodata 
+        </div>
+
+        <div class="view-switch">
+            <button class="v-btn active" data-action="mode" data-value="edit"><i class="fa-solid fa-pen"></i></button>
+            <button class="v-btn" data-action="mode" data-value="preview"><i class="fa-solid fa-eye"></i></button>
+        </div>
+
+        <div class="controls">
+            <button class="icon-btn color-wrap" data-action="toggle-palette" title="Change Theme / रंग बदलें">
+                <i class="fa-solid fa-palette"></i>
+            </button>
+            <div id="palette-popover" class="palette-popover"></div>
+            
+            <button class="icon-btn primary" data-action="print" title="Download PDF / डाउनलोड करें">
+                <i class="fa-solid fa-download"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="workspace">
+        <!-- EDITOR -->
+        <aside class="editor">
+            
+            <section class="card-ui">
+                <div class="card-ui-head"><i class="fa-solid fa-user"></i> Personal / व्यक्तिगत विवरण</div>
+                
+                <div class="input-row"><i class="fa-solid fa-signature input-icon"></i> <input type="text" data-bind="name" placeholder="Full Name / पूरा नाम"></div>
+                
+                <div class="grid-2">
+                    <div class="input-row"><i class="fa-regular fa-calendar input-icon"></i> <input type="date" data-bind="dob"></div>
+                    <div class="input-row"><i class="fa-regular fa-clock input-icon"></i> <input type="time" data-bind="tob"></div>
+                </div>
+                <div class="input-row"><i class="fa-solid fa-map-pin input-icon"></i> <input type="text" data-bind="pob" placeholder="Birth Place / जन्म स्थान"></div>
+                
+                <div class="grid-2">
+                    <div class="input-row"><i class="fa-solid fa-ruler-vertical input-icon"></i> <input type="text" data-bind="height" placeholder="Height / कद (e.g. 5'5&quot;)"></div>
+                    <div class="input-row"><i class="fa-solid fa-droplet input-icon"></i> <input type="text" data-bind="complexion" placeholder="Complexion / रंग"></div>
+                </div>
+                <div class="grid-2">
+                    <!-- RASHI DROPDOWN -->
+                    <div class="input-row">
+                        <i class="fa-solid fa-star input-icon"></i> 
+                        <select data-bind="rashi">
+                            <option value="" disabled selected>Rashi / राशि</option>
+                            <option value="Aries (मेष)">Aries (मेष)</option>
+                            <option value="Taurus (वृषभ)">Taurus (वृषभ)</option>
+                            <option value="Gemini (मिथुन)">Gemini (मिथुन)</option>
+                            <option value="Cancer (कर्क)">Cancer (कर्क)</option>
+                            <option value="Leo (सिंह)">Leo (सिंह)</option>
+                            <option value="Virgo (कन्या)">Virgo (कन्या)</option>
+                            <option value="Libra (तुला)">Libra (तुला)</option>
+                            <option value="Scorpio (वृश्चिक)">Scorpio (वृश्चिक)</option>
+                            <option value="Sagittarius (धनु)">Sagittarius (धनु)</option>
+                            <option value="Capricorn (मकर)">Capricorn (मकर)</option>
+                            <option value="Aquarius (कुंभ)">Aquarius (कुंभ)</option>
+                            <option value="Pisces (मीन)">Pisces (मीन)</option>
+                        </select>
+                    </div>
+                    <div class="input-row">
+                        <i class="fa-solid fa-fire input-icon"></i> 
+                        <select data-bind="manglik">
+                            <option value="" disabled selected>Manglik? / मांगलिक</option>
+                            <option value="No / नहीं">No / नहीं</option>
+                            <option value="Yes / हाँ">Yes / हाँ</option>
+                            <option value="Partial / आंशिक">Partial / आंशिक</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="input-row"><i class="fa-solid fa-om input-icon"></i> <input type="text" data-bind="religion" placeholder="Religion / धर्म"></div>
+                    <div class="input-row"><i class="fa-solid fa-users input-icon"></i> <input type="text" data-bind="caste" placeholder="Caste / जाति"></div>
+                </div>
+                <div class="input-row"><i class="fa-solid fa-graduation-cap input-icon"></i> <input type="text" data-bind="education" placeholder="Education / शिक्षा"></div>
+            </section>
+
+            <section class="card-ui">
+                <div class="card-ui-head"><i class="fa-solid fa-house-user"></i> Family / पारिवारिक विवरण</div>
+                
+                <div class="input-row"><i class="fa-solid fa-user-tie input-icon"></i> <input type="text" data-bind="father" placeholder="Father's Name / पिता का नाम"></div>
+                <div class="input-row"><i class="fa-solid fa-briefcase input-icon"></i> <input type="text" data-bind="fatherOcc" placeholder="Occupation / व्यवसाय"></div>
+                <div class="input-row"><i class="fa-solid fa-user-nurse input-icon"></i> <input type="text" data-bind="mother" placeholder="Mother's Name / माता का नाम"></div>
+                <div class="input-row"><i class="fa-solid fa-home input-icon"></i> <input type="text" data-bind="motherOcc" placeholder="Occupation / व्यवसाय"></div>
+                
+                <div class="grid-2">
+                    <div class="input-row"><i class="fa-solid fa-male input-icon"></i> <input type="text" data-bind="brothers" placeholder="Brothers / भाई"></div>
+                    <div class="input-row"><i class="fa-solid fa-female input-icon"></i> <input type="text" data-bind="sisters" placeholder="Sisters / बहनें"></div>
+                </div>
+            </section>
+
+             <section class="card-ui">
+                <div class="card-ui-head"><i class="fa-solid fa-address-book"></i> Contact / संपर्क विवरण</div>
+                
+                <div class="input-row"><i class="fa-solid fa-phone input-icon"></i> <input type="text" data-bind="contact" placeholder="Mobile / मोबाइल"></div>
+                <div class="input-row">
+                    <i class="fa-solid fa-map-location-dot input-icon"></i> 
+                    <textarea data-bind="address" placeholder="Address / पता"></textarea>
+                </div>
+            </section>
+            <div style="height: 60px;"></div>
+        </aside>
+
+        <!-- PREVIEW -->
+        <main class="preview">
+            <div id="paper">
+                <!-- Ornamental Corners -->
+                <div class="corner tl"></div><div class="corner tr"></div>
+                <div class="corner bl"></div><div class="corner br"></div>
+
+                <!-- Header -->
+                <div class="c-header">
+                    <h1 id="out-name">Shivani Kumari</h1>
+                    <div class="c-divider"></div>
+                </div>
+
+                <!-- Personal Details -->
+                <div class="c-section">
+                    <div class="c-section-title"><i class="fa-solid fa-star-of-life" style="font-size: 12px;"></i> Personal Details / व्यक्तिगत विवरण <i class="fa-solid fa-star-of-life" style="font-size: 12px;"></i></div>
+                    <div class="c-content-box">
+                        <div class="c-row">
+                            <div class="c-item"><span>DOB / जन्म तिथि</span> <div class="c-val" id="out-dob">02-08-2005</div></div>
+                            <div class="c-item"><span>Time / समय</span> <div class="c-val" id="out-tob">06:30 AM</div></div>
+                            <div class="c-item"><span>Place / स्थान</span> <div class="c-val" id="out-pob">Aligarh</div></div>
+                            <div class="c-item"><span>Height / कद</span> <div class="c-val" id="out-height">5'5"</div></div>
+                            <div class="c-item"><span>Rashi / राशि</span> <div class="c-val" id="out-rashi">Capricorn (मकर)</div></div>
+                            <div class="c-item"><span>Manglik / मांगलिक</span> <div class="c-val" id="out-manglik">No</div></div>
+                            <div class="c-item"><span>Religion / धर्म</span> <div class="c-val" id="out-religion">Hindu</div></div>
+                            <div class="c-item"><span>Caste / जाति</span> <div class="c-val" id="out-caste">Jatav</div></div>
+                            <div class="c-item"><span>Complexion / रंग</span> <div class="c-val" id="out-complexion">Fair</div></div>
+                            <div class="c-item"><span>Education / शिक्षा</span> <div class="c-val" id="out-education">Intermediate</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Details -->
+                <div class="c-section">
+                    <div class="c-section-title"><i class="fa-solid fa-star-of-life" style="font-size: 12px;"></i> Family Details / पारिवारिक विवरण <i class="fa-solid fa-star-of-life" style="font-size: 12px;"></i></div>
+                    <div class="c-content-box">
+                        <div class="c-row">
+                            <div class="c-item"><span>Father / पिता</span> <div class="c-val" id="out-father">Gyan Singh</div></div>
+                            <div class="c-item"><span>Job / व्यवसाय</span> <div class="c-val" id="out-fatherOcc">Farmer</div></div>
+                            <div class="c-item"><span>Mother / माता</span> <div class="c-val" id="out-mother">Guddi Devi</div></div>
+                            <div class="c-item"><span>Job / व्यवसाय</span> <div class="c-val" id="out-motherOcc">Housewife</div></div>
+                            <div class="c-item"><span>Brother / भाई</span> <div class="c-val" id="out-brothers">1</div></div>
+                            <div class="c-item"><span>Sister / बहन</span> <div class="c-val" id="out-sisters">3 Married, 1 Unmarried</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Details -->
+                <div class="c-section">
+                    <div class="c-section-title"><i class="fa-solid fa-star-of-life" style="font-size: 12px;"></i> Contact Details / संपर्क विवरण <i class="fa-solid fa-star-of-life" style="font-size: 12px;"></i></div>
+                    <div class="c-content-box">
+                        <div class="c-row">
+                            <div class="c-item"><span>Mobile / मोबाइल</span> <div class="c-val" id="out-contact">9876543210</div></div>
+                            <div class="c-item"><span>Address / पता</span> <div class="c-val" id="out-address">Khaira Buzurg, Ranjeet Garhi, Khair, Aligarh</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-footer">
+                    || ॐ श्री गणेशाय नमः ||
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,405 @@
+/* * 1. UI TOKENS (Editor Interface) */
+:root {
+    --bg-body: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-input: #f1f5f9;
+    --border: #e2e8f0;
+    --primary: #5b21b6;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    --radius: 12px;
+    --res-scale: 1;
+
+    /* Card Variables (Default: Royal Purple) */
+    --card-bg-1: #1a0b2e;
+    --card-bg-2: #341255;
+    --card-border: #d4af37;
+    --card-text: #fdf6e3;
+    --card-gold: #c5a059;
+    --card-gold-light: #f3e5ab;
+    --card-overlay: rgba(255, 255, 255, 0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: 'Noto Sans Devanagari', sans-serif; /* Hindi Font */
+    background: var(--bg-body);
+    color: var(--text-main);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* * 2. HEADER */
+.header {
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+    box-shadow: var(--shadow);
+}
+
+.brand {
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    font-family: 'Rozha One', serif;
+}
+
+.view-switch {
+    display: none;
+    background: var(--bg-input);
+    padding: 4px;
+    border-radius: 50px;
+    gap: 4px;
+}
+.v-btn {
+    width: 40px; height: 32px; border-radius: 50px; border: none;
+    background: transparent; color: var(--text-muted);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.v-btn.active { background: var(--bg-surface); color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+
+.controls { display: flex; gap: 12px; align-items: center; }
+
+.icon-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface); color: var(--text-main);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; position: relative;
+}
+.icon-btn:hover { background: var(--bg-input); transform: translateY(-1px); }
+.icon-btn.primary { background: var(--primary); color: white; border-color: transparent; }
+
+/* Palette Popover */
+.palette-popover {
+    display: none; position: absolute; top: 55px; right: 0;
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px; width: 240px;
+    grid-template-columns: repeat(5, 1fr); gap: 8px;
+    box-shadow: var(--shadow-float); z-index: 100;
+}
+.palette-popover.open { display: grid; }
+
+.swatch {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid transparent; cursor: pointer; transition: transform 0.2s;
+}
+.swatch:hover { transform: scale(1.1); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+/* * 3. EDITOR LAYOUT */
+.workspace { display: flex; flex: 1; overflow: hidden; }
+
+.editor {
+    width: 400px; min-width: 320px;
+    background: var(--bg-surface); border-right: 1px solid var(--border);
+    overflow-y: auto; padding: 20px;
+    display: flex; flex-direction: column; gap: 20px;
+}
+
+.card-ui {
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 16px 16px 16px;
+    position: relative; margin-top: 10px;
+    box-shadow: var(--shadow);
+}
+.card-ui-head {
+    position: absolute; top: -12px; left: 12px;
+    background: var(--bg-surface); padding: 0 8px;
+    color: var(--primary); font-weight: 600; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    font-family: 'Rozha One', serif;
+}
+
+.input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.input-icon { color: var(--text-muted); width: 20px; text-align: center; font-size: 0.9rem; opacity: 0.7; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+input[type="text"], input[type="date"], input[type="time"], textarea, select {
+    width: 100%; padding: 10px 12px;
+    background: var(--bg-input); border: 1px solid transparent; border-radius: 8px;
+    font-size: 0.95rem; color: var(--text-main); transition: 0.2s;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+}
+input:focus, textarea:focus, select:focus { outline: none; background: var(--bg-surface); border-color: var(--primary); }
+
+/* * 4. PREVIEW AREA */
+.preview {
+    flex: 1; background: #111; display: flex; justify-content: center; align-items: flex-start;
+    overflow-y: auto; padding: 40px;
+}
+
+/* * 5. CARD DESIGN */
+#paper {
+    width: 700px; 
+    min-height: auto;
+    /* Richer Gradient for depth */
+    background: radial-gradient(circle at center, var(--card-bg-2) 0%, var(--card-bg-1) 120%);
+    color: var(--card-text);
+    border: 1px solid var(--card-border);
+    outline: 3px double var(--card-border);
+    outline-offset: -6px;
+    border-radius: 4px;
+    /* Increased padding for better White Space */
+    padding: 60px; 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    transform-origin: top center;
+}
+
+/* Texture Pattern */
+#paper::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z' fill='none' stroke='%23d4af37' stroke-width='0.5' opacity='0.05'/%3E%3C/svg%3E");
+    opacity: 0.25; pointer-events: none;
+    mask-image: radial-gradient(circle, black 40%, transparent 100%);
+}
+
+.corner {
+    position: absolute; width: 70px; height: 70px;
+    border: 3px solid var(--card-border);
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+.tl { top: 18px; left: 18px; border-right: none; border-bottom: none; border-top-left-radius: 12px; }
+.tr { top: 18px; right: 18px; border-left: none; border-bottom: none; border-top-right-radius: 12px; }
+.bl { bottom: 18px; left: 18px; border-right: none; border-top: none; border-bottom-left-radius: 12px; }
+.br { bottom: 18px; right: 18px; border-left: none; border-top: none; border-bottom-right-radius: 12px; }
+
+.c-header {
+    text-align: center; 
+    margin-bottom: 50px; /* Increased separation */
+    position: relative; 
+    z-index: 2;
+}
+
+.c-header h1 {
+    font-family: 'Rozha One', serif; 
+    font-size: 48px; /* Increased size for Hierarchy */
+    letter-spacing: 1.5px; 
+    margin: 0 0 10px 0; 
+    line-height: 1.2;
+    background: linear-gradient(to bottom right, var(--card-gold-light), var(--card-gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.c-divider {
+    width: 100px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+    margin: 10px auto;
+    opacity: 0.8;
+}
+
+/* Sections */
+.c-section { 
+    margin-top: 45px; /* Better Vertical Rhythm */
+    position: relative; 
+    z-index: 2; 
+}
+
+.c-section-title {
+    font-family: 'Rozha One', serif; 
+    font-size: 24px; 
+    font-weight: 500;
+    color: var(--card-gold); 
+    text-align: center; 
+    margin-bottom: 25px; /* Breathing room */
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.c-section-title::before, .c-section-title::after {
+    content: ""; height: 1px; width: 60px; background: var(--card-gold); opacity: 0.4;
+}
+
+/* Content Box - Glassmorphism & Depth */
+.c-content-box {
+    background: var(--card-overlay);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 12px; /* Smoother corners */
+    padding: 30px; /* Generous internal padding */
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Lift from background */
+}
+
+.c-row {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px 40px; /* Increased horizontal gap for balance */
+}
+
+.c-item { 
+    font-size: 16px; 
+    line-height: 1.8; /* Better readability */
+    display: flex; 
+    align-items: baseline;
+    border-bottom: 1px dotted rgba(255,255,255,0.1); 
+    padding-bottom: 10px;
+}
+.c-item:last-child { border-bottom: none; }
+
+.c-item span {
+    font-family: 'Rozha One', serif; 
+    color: var(--card-gold-light);
+    font-weight: 500; 
+    font-size: 18px; 
+    margin-right: 15px; 
+    min-width: 140px; /* Consistent alignment */
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+.c-val { 
+    color: var(--card-text); 
+    font-weight: 400; 
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 17px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.c-footer {
+    text-align: center; margin-top: 60px; font-size: 18px; color: var(--card-gold);
+    font-family: 'Rozha One', serif; opacity: 0.7; letter-spacing: 3px;
+    position: relative; z-index: 2;
+}
+
+/* * 6. RESPONSIVE */
+@media (max-width: 1024px) {
+    .view-switch { display: flex; }
+    .workspace { flex-direction: column; }
+    .editor { width: 100%; border: none; padding-bottom: 100px; }
+    .preview { padding: 0; background: #111; }
+    #paper { width: 100%; margin: 20px auto; transform: none !important; border-radius: 0; border: none; }
+    .palette-popover { right: 50%; transform: translateX(50%); top: 60px; }
+    
+    .mode-edit .preview { display: none; }
+    .mode-preview .editor { display: none; }
+}
+
+/* =========================================================
+   7. PRINT FIXES — FORCE SINGLE A4 PAGE
+   ========================================================= */
+@media print {
+
+    @page {
+        size: 210mm 297mm;
+        margin: 0;
+    }
+
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        height: 100%;
+        background: none !important;
+        overflow: hidden !important;
+    }
+
+    /* Hide UI */
+    .header, .editor, .controls, .view-switch {
+        display: none !important;
+    }
+
+    .workspace, .preview {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: none !important;
+    }
+
+    /* ---------- FORCE A4 PAGE ---------- */
+    #paper {
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+
+        padding: 16mm !important;
+        margin: 0 auto !important;
+
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+
+        overflow: hidden !important;
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* ---------- SCALE TYPOGRAPHY ---------- */
+    .c-header h1 {
+        font-size: 34px !important;
+        margin-bottom: 6mm !important;
+    }
+
+    .c-section {
+        margin-top: 18px !important;
+    }
+
+    .c-section-title {
+        font-size: 18px !important;
+        margin-bottom: 12px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .c-content-box {
+        padding: 16px !important;
+        box-shadow: none !important;
+        break-inside: avoid !important;
+    }
+
+    .c-row {
+        gap: 10px 24px !important;
+    }
+
+    .c-item {
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+        padding-bottom: 4px !important;
+        margin-bottom: 4px !important;
+        border-bottom: 1px dotted rgba(0,0,0,0.25);
+        break-inside: avoid !important;
+    }
+
+    .c-item span {
+        font-size: 15px !important;
+        min-width: 120px !important;
+    }
+
+    .c-val {
+        font-size: 14px !important;
+    }
+
+    .c-footer {
+        font-size: 14px !important;
+        margin-top: 18px !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* Remove decorations */
+    .corner { display: none !important; }
+
+    /* HARD STOP: NO PAGE BREAKS */
+    * {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+}

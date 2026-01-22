@@ -90,7 +90,7 @@ Themes persist automatically using localStorage.
 ## 🚀 Getting Started
 
 1. Open the live website:  
-   👉 https://lionkiller616.github.io/Biodatacard/
+   👉 [biodata](https://uxle.github.io/Biodatacard/)
 
 2. Fill all biodata details
 3. Switch to preview mode
